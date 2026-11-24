@@ -1,12 +1,16 @@
 import pygame as pg
 
+from renderer import Renderer
+from settings import WINDOW_SIZE, FPS
+
 
 class Game:
     def __init__(self):
         pg.init()
-        self.screen = pg.display.set_mode((160 * 5, (96 * 5) + 180))
+        self.screen = pg.display.set_mode(WINDOW_SIZE)
         pg.display.set_caption('DOOM Fire | By LT 8 and 9')
         self.clock = pg.time.Clock()
+        self.renderer = Renderer(self.screen)
         self.running = True
 
     def handle_events(self):
@@ -18,7 +22,9 @@ class Game:
         try:
             while self.running:
                 self.handle_events()
-                if not self.running:
-                    break
+                self.renderer.draw()
+
+                pg.display.flip()
+                self.clock.tick(FPS)
         finally:
             pg.quit()
