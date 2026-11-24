@@ -15,5 +15,9 @@ class Fire:
     def update(self):
         self.intensity[-1] = self.max_heat
 
+        heat = self.intensity[1:].astype(np.int16)
+
+        self.intensity[:-1] = np.maximum(heat - 1, 0)
+
     def get_colors(self):
         return self.palette[self.intensity]
