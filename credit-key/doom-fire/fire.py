@@ -24,5 +24,6 @@ class Fire:
 
         self.intensity[:-1] = np.maximum(heat - decay, 0)
 
-    def get_colors(self):
-        return self.palette[self.intensity]
+    def get_colors(self, luminosity=1.0):
+        colors = self.palette[self.intensity].astype(np.float32)
+        return np.clip(colors * luminosity, 0, 255).astype(np.uint8)
