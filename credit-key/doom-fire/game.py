@@ -5,6 +5,7 @@ class Game:
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode((160 * 5, (96 * 5) + 180))
+        pg.display.set_caption('DOOM Fire | By LT 8 and 9')
         self.clock = pg.time.Clock()
         self.running = True
 
