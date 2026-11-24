@@ -1,5 +1,7 @@
 import pygame as pg
 
+from settings import FIRE_WIDTH, FIRE_HEIGHT
+
 
 class Renderer:
     def __init__(self, screen):
@@ -8,5 +10,15 @@ class Renderer:
         self.small_font = pg.font.Font(None, 19)
         self.title_font = pg.font.Font(None, 28)
 
-    def draw(self):
+    def draw(self, colors):
         self.screen.fill((18, 19, 24))
+
+        surface = pg.surfarray.make_surface(
+            colors.swapaxes(0, 1)
+        )
+
+        surface = pg.transform.scale(
+            surface, (FIRE_WIDTH, FIRE_HEIGHT)
+        )
+
+        self.screen.blit(surface, (0, 0))
