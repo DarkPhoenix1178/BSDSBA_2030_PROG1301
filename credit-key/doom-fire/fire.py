@@ -14,15 +14,19 @@ class Fire:
 
         self.rng = np.random.default_rng(seed)
 
-        self.anchor_x = np.linspace(0, width - 1, max(2, width // 1 + 1))
+        self.anchor_x = np.linspace(0, width - 1, max(2, width // 9 + 1))
         self.fuel = self.rng.uniform(0.0, 1.0, self.anchor_x.size)
         self.target_fuel = self.fuel.copy()
         self.frame = 0
 
-    def update(self, strength=1, wind=1):
+    def update(self, strength=1, wind=0.2):
+        if strength <= 0:
+            self.intensity.fill(0)
+
         if self.frame % 12 == 0:
             self.target_fuel = self.rng.random(self.anchor_x.size)
 
+        # Transition rate * difference
         self.fuel += 0.16 * (self.target_fuel - self.fuel)
         self.frame += 1
 
@@ -56,7 +60,6 @@ class Fire:
         heat = self.intensity[1:]
 
         # Turbulence
-
         turbulence = self.rng.choice(
             [-1, 0, 1],
             size=heat.shape,
@@ -65,14 +68,28 @@ class Fire:
 
         columns = np.arange(self.width)
 
-        source_x = columns - turbulence - int(wind)
+        # Wind
+        displacement = np.floor(
+            2.0 * wind + self.rng.random(heat.shape)
+        ).astype(int)
 
+        source_x = columns - turbulence - displacement
+
+        # Identify valid source coordinates
+        if wind > 0:
+            valid = source_x >= 0
+        elif wind < 0:
+            valid = source_x < self.width
+        else:
+            valid = (source_x >= 0) & (source_x < self.width)
+
+        # Prevent indexing errors
         source_x = np.clip(source_x, 0, self.width - 1)
 
         heat = np.take_along_axis(heat, source_x, axis=1)
 
-        # Horizontal Displacement due to wind
-        heat = np.roll(heat, shift=np.floor(2.0 * wind), axis=1)
+        # Remove heat coming from outside the grid
+        heat = np.where(valid, heat, 0)
 
         decay = cooling * self.rng.uniform(
             0.75, 1.25, size=(self.height - 1, self.width)
