@@ -712,7 +712,7 @@
         '<div class="notes-teaser"><div><h3>The four sides worth writing</h3><p>Foundations and daily entries, adjustments and receivables, cash and inventory, PPE and bonds, equity, cash flows, ratios, and trend analysis. Built to fit two short bond papers, front and back.</p></div><button class="btn primary" data-act="notes">Open exam notes</button></div>' +
         '<div class="section-head"><h2>Leaderboard</h2><p id="board-players">Top scores on this server</p></div>' +
         boardHTML() +
-        '<div class="foot"><span>MADE BY DAKSH / V3.6</span><span>Sound on by default. Press M to mute.</span></div>' +
+        '<div class="foot"><span>MADE BY DAKSH / V3.7</span><span>Sound on by default. Press M to mute.</span></div>' +
       "</main>";
     window.scrollTo(0, 0);
     renderBoard(S.boardMode);
@@ -1095,7 +1095,7 @@
         "</div>" +
         '<p class="hint" style="margin-top:0">Best streak ' + S.bestStreak + " &middot; " + fmt(avg) + " average per question" + (isBest ? " &middot; new personal best" : "") + "</p>" +
         '<p class="lb-line" id="lb-line">Posting score...</p>' +
-        '<div class="note-card"><p>Just so you know, you\'re soo GAY</p></div>' +
+        '<div class="note-card"><p>Do your best, and let god do the rest</p></div>' +
         (S.missed.length ? '<p class="jump"><a href="#mistakes">Review your ' + S.missed.length + ' mistakes</a></p>' : "") +
         '<div class="panel result-board"><h3>Leaderboard</h3><div id="result-board-body"><div class="board-empty">Loading...</div></div></div>' +
         '<div class="panel"><h3>Chapter breakdown</h3>' + brk + "</div>" +
