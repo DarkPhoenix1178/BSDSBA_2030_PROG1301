@@ -1,0 +1,7 @@
+# Runtime data, not source
+leaderboard.db
+leaderboard.db-*
+
+# Python
+__pycache__/
+*.pyc
