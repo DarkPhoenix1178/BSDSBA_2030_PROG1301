@@ -5,10 +5,10 @@ so basically it can improve more such as better UI, smoother reaction, etc.
 I will add more commits myself
 """
 
-
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation
+from matplotlib.widgets import Button
 
 GRID_SIZE = 200
 ALPHA = 1.0
@@ -49,19 +49,33 @@ def main():
     rng = np.random.default_rng()
     a, b, c = rng.random((3, GRID_SIZE, GRID_SIZE))
 
-    fig, ax = plt.subplots()
-    image = ax.imshow(a, cmap="plasma", vmin=0, vmax=1)
+    fig, ax = plt.subplots(figsize=6,6))
+    fig.subplots_adjust(bottom=0.12)
+    image = ax.imshow(np.dstack((a, b, c)), interpolation="nearest")
     ax.set_title("Belousov-Zhabotinsky reaction")
     ax.axis("off")
+
+    running = True
 
     def update(_frame):
         """It just updates the image"""
         nonlocal a, b, c
-        a, b, c = step(a, b, c)
-        image.set_data(a)
+        if running:
+            a, b, c = step(a, b, c)
+            image.set_data(np.dstack((a, b, c)))
         return (image,)
 
-    _anim = FuncAnimation(fig, update, interval=30, blit=True,
+    def toggle(_event):
+        nonlocal running
+        running = not running
+        button.label.set_text("Pause" if running else "Start")
+        fig.canvas.draw_idle()
+
+    button_ax = fig.add_axes([0.4, 0.2, 0.2, 0.7])
+    button = Button(button_ax, "Pause")
+    button.on_clicked(toggle)
+
+    _anim = FuncAnimation(fig, update, interval=30, blit=False,
                           cache_frame_data=False)
     plt.show()
 
