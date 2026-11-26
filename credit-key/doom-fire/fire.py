@@ -22,6 +22,7 @@ class Fire:
     def update(self, strength=1, wind=1):
         if strength <= 0:
             self.intensity.fill(0)
+            return
 
         if self.frame % 12 == 0:
             self.target_fuel = self.rng.random(self.anchor_x.size)

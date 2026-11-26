@@ -29,6 +29,16 @@ class Game:
             if event.type == pg.QUIT:
                 self.running = False
 
+            if event.type == pg.KEYUP:
+                if event.scancode == 82:  # UP
+                    self.strength += 0.1 if self.strength <= 0.9 else 0
+                elif event.scancode == 81:  # DOWN
+                    self.strength -= 0.1 if self.strength >= 0 else 0
+                elif event.scancode == 80:  # LEFT
+                    self.wind -= 0.1 if self.wind >= -1.9 else 0
+                elif event.scancode == 79:  # RIGHT
+                    self.wind += 0.1 if self.wind <= 1.9 else 0
+
     def run(self):
         try:
             while self.running:
