@@ -71,7 +71,7 @@ def main():
         button.label.set_text("Pause" if running else "Start")
         fig.canvas.draw_idle()
 
-    button_ax = fig.add_axes([0.4, 0.2, 0.2, 0.7])
+    button_ax = fig.add_axes([0.4, 0.02, 0.02, 0.7])
     button = Button(button_ax, "Pause")
     button.on_clicked(toggle)
 
