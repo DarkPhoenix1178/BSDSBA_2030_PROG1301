@@ -9,7 +9,7 @@ import numpy as np
 from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Button
 
-GRID_SIZE = 200
+GRID_SIZE = 300
 ALPHA = 1.0
 BETA = 1.0
 GAMMA = 1.0
