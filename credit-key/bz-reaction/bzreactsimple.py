@@ -49,7 +49,7 @@ def main():
     rng = np.random.default_rng()
     a, b, c = rng.random((3, GRID_SIZE, GRID_SIZE))
 
-    fig, ax = plt.subplots(figsize=6,6))
+    fig, ax = plt.subplots(figsize=(6, 6))
     fig.subplots_adjust(bottom=0.12)
     image = ax.imshow(np.dstack((a, b, c)), interpolation="nearest")
     ax.set_title("Belousov-Zhabotinsky reaction")
@@ -71,7 +71,7 @@ def main():
         button.label.set_text("Pause" if running else "Start")
         fig.canvas.draw_idle()
 
-    button_ax = fig.add_axes([0.4, 0.02, 0.02, 0.7])
+    button_ax = fig.add_axes([0.4, 0.02, 0.2, 0.07])
     button = Button(button_ax, "Pause")
     button.on_clicked(toggle)
 
