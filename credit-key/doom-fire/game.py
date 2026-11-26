@@ -14,6 +14,8 @@ class Game:
         self.renderer = Renderer(self.screen)
         self.fire = Fire(GRID_WIDTH, GRID_HEIGHT)
         self.running = True
+        self.wind = -1.0
+        self.strength = 1.0
 
         # FPS limiter
         # The screen draws 60 times per second (FPS),
@@ -34,7 +36,7 @@ class Game:
 
                 # Only update the fire on every 2nd frame
                 if self.frame_count % self.update_every == 0:
-                    self.fire.update()
+                    self.fire.update(self.strength, self.wind)
                 self.frame_count += 1
 
                 colors = self.fire.get_colors()

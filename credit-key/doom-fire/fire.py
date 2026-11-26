@@ -19,7 +19,7 @@ class Fire:
         self.target_fuel = self.fuel.copy()
         self.frame = 0
 
-    def update(self, strength=1, wind=0.2):
+    def update(self, strength=1, wind=1):
         if strength <= 0:
             self.intensity.fill(0)
 
