@@ -63,4 +63,4 @@ class Renderer:
         )
         
         # Position the title in the upper-left corner.
-        self.screen.blit(title, (10, 10))
+        self.screen.blit(title, (10, 480))
