@@ -23,11 +23,15 @@ R = np.eye(3)
 positions = [pos.copy()]
 
 for _ in range(80):
-    R = R @ rot_y(np.pi / 80)
+    R = R @ rotation_y(np.pi / 80)
     pos = pos + R[:, 0] * (100.0 * np.pi / 80)
     positions.append(pos.copy())
 
 # TODO: Add Phase 2 & other maneuvers here
+for _ in range(40):
+    R = R @ rotation_x(np.pi / 40)
+    pos = pos + R[:, 0] * 2.0
+    positions.append(pos.copy())
 
 positions = np.array(positions)
 
