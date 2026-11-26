@@ -55,7 +55,14 @@ while True:
             pygame.quit()
             sys.exit()
 
-    time += dt
+elif event.type == pygame.KEYDOWN: 
+    if event.key == pygame.K_SPACE:
+        paused = not paused 
+    if event.key == pygame.K_r: 
+        time = 0 
+        
+    if not paused: 
+        time += dt
     h, m, s = int(time // 3600), int(time % 3600 // 60), int(time % 60)
 
     screen.fill((30, 30, 30))
