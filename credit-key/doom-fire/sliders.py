@@ -1,4 +1,5 @@
-import streamlit as st
+import pygame as pg
 
-firesize = st.slider("Fire Size", 0, 100, 25)
-st.write(f"Selected Size: {firesize}")
+def draw_sliders(screen):
+  pg.draw.rect(screen, (200, 200, 200), (50, 50, 200, 10))
+  pygame.draw.circle(screen, (255, 0, 0), (100, 55), 10)
