@@ -13,7 +13,11 @@ GRID_SIZE = 200
 ALPHA = 1.0
 BETA = 1.0
 GAMMA = 1.0
-
+# UI colours (dark theme)
+BG_COLOR = "#0e1117"
+PANEL_COLOR = "#1c2030"
+HOVER_COLOR = "#2a3045"
+TEXT_COLOR = "#e6e6e6"
 
 def neighbourhood_average(grid): 
     """"this one basically just averages with the 8 neighbors""" 
@@ -48,10 +52,12 @@ def main():
     rng = np.random.default_rng()
     a, b, c = rng.random((3, GRID_SIZE, GRID_SIZE))
 
-    fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(6, 6), facecolor=BG_COLOR)
     fig.subplots_adjust(bottom=0.12)
-    image = ax.imshow(np.dstack((a, b, c)), interpolation="nearest")
-    ax.set_title("Belousov-Zhabotinsky reaction")
+       # bicubic blends neighbouring cells so zooming in looks smooth, not boxy
+    image = ax.imshow(np.dstack((a, b, c)), interpolation="bicubic")
+    ax.set_title("Belousov-Zhabotinsky reaction", color=TEXT_COLOR,
+                 fontsize=14, fontweight="bold")
     ax.axis("off")
 
     running = True
@@ -71,7 +77,10 @@ def main():
         fig.canvas.draw_idle()
 
     button_ax = fig.add_axes([0.4, 0.02, 0.2, 0.07])
-    button = Button(button_ax, "Pause")
+    button = Button(button_ax, "Pause", color=PANEL_COLOR,
+                    hovercolor=HOVER_COLOR)
+    button.label.set_color(TEXT_COLOR)
+    button.label.set_fontweight("bold")
     button.on_clicked(toggle)
 
     _anim = FuncAnimation(fig, update, interval=30, blit=False,
