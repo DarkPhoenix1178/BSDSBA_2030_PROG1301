@@ -1,7 +1,10 @@
 import pygame as pg
 
 from settings import FIRE_WIDTH, FIRE_HEIGHT
+from sliders import draw_sliders
 
+def render(screen):
+    draw_sliders(screen)
 
 class Renderer:
     def __init__(self, screen):
