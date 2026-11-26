@@ -20,3 +20,11 @@ while True:
     screen.fill((30, 30, 30))
     screen.blit(font.render(f"{h:02}:{m:02}:{s:02}", True, "white"), (10, 10))
     pygame.display.flip()
+
+def rotation_x(theta):
+    c, s = np.cos(theta), np.sin(theta)
+    return np.array([[1, 0, 0], [0, c, -s], [0, s, c]])
+
+def rotation_y(theta):
+    c,s = np.cos(theta), np.sin(theta)
+    return np.array([[c, 0, s], [0, 1, 0], [-s, 0, c]])
