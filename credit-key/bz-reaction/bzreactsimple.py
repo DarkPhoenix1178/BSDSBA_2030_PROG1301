@@ -1,8 +1,7 @@
 """
 Disclaimer: what happened here is that this
 commit is just the foundation of the BZ reaction
-so basically it can improve more such as better UI, smoother reaction, etc. 
-I will add more commits myself
+so basically it can improve more such as better UI, smoother reaction, etc.
 """
 
 import matplotlib.pyplot as plt
