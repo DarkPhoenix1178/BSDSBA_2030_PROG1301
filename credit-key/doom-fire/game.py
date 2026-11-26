@@ -1,3 +1,4 @@
+
 import pygame as pg
 
 from fire import Fire
@@ -16,6 +17,11 @@ class Game:
         self.running = True
         self.wind = -1.0
         self.strength = 1.0
+
+        # Fire mode: 'classic' (original DOOM wind) or 'swirl' (curling eddies)
+        # Press M to switch, [ and ] to change swirl strength
+        self.mode = 'classic'
+        self.swirl = 1.0
 
         # FPS limiter
         # The screen draws 60 times per second (FPS),
@@ -38,6 +44,15 @@ class Game:
                     self.wind -= 0.1 if self.wind >= -1.9 else 0
                 elif event.scancode == 79:  # RIGHT
                     self.wind += 0.1 if self.wind <= 1.9 else 0
+                elif event.key == pg.K_m:
+                    self.mode = 'swirl' if self.mode == 'classic' else 'classic'
+                    pg.display.set_caption(
+                        f'DOOM Fire | By LT 8 and 9 | Mode: {self.mode}'
+                    )
+                elif event.key == pg.K_LEFTBRACKET:
+                    self.swirl = max(0.0, self.swirl - 0.2)
+                elif event.key == pg.K_RIGHTBRACKET:
+                    self.swirl = min(3.0, self.swirl + 0.2)
 
     def run(self):
         try:
@@ -46,7 +61,12 @@ class Game:
 
                 # Only update the fire on every 2nd frame
                 if self.frame_count % self.update_every == 0:
-                    self.fire.update(self.strength, self.wind)
+                    if self.mode == 'swirl':
+                        self.fire.update_swirl(
+                            self.strength, self.wind, self.swirl
+                        )
+                    else:
+                        self.fire.update(self.strength, self.wind)
                 self.frame_count += 1
 
                 colors = self.fire.get_colors()
