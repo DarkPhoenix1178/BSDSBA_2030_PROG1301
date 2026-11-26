@@ -2,7 +2,7 @@ import pygame as pg
 
 from fire import Fire
 from renderer import Renderer
-from settings import WINDOW_SIZE, FPS, GRID_HEIGHT, GRID_WIDTH
+from settings import WINDOW_SIZE, FPS, SIMULATION_FPS, GRID_HEIGHT, GRID_WIDTH
 
 
 class Game:
@@ -15,6 +15,13 @@ class Game:
         self.fire = Fire(GRID_WIDTH, GRID_HEIGHT)
         self.running = True
 
+        # FPS limiter
+        # The screen draws 60 times per second (FPS),
+        # but the fire only updates 30 times per second (SIMULATION_FPS).
+        # 60 // 30 = 2, so the fire updates once every 2 screen frames.
+        self.frame_count = 0
+        self.update_every = FPS // SIMULATION_FPS
+
     def handle_events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -24,7 +31,12 @@ class Game:
         try:
             while self.running:
                 self.handle_events()
-                self.fire.update()
+
+                # Only update the fire on every 2nd frame
+                if self.frame_count % self.update_every == 0:
+                    self.fire.update()
+                self.frame_count += 1
+
                 colors = self.fire.get_colors()
                 self.renderer.draw(colors)
 
