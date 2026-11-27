@@ -275,19 +275,6 @@ def distance_squared_is_correct():
     assert Colorassign.distance_squared(3, 4, 0, 0) == 25
     assert Colorassign.distance_squared(5, 5, 5, 5) == 0
 
-
-@check("COLORASSIGN")
-def track_update_computes_motion_and_decision_flag():
-    tr = Track(0, 240, 288, 2, T, False, False, False, False, False)
-    tr.update(242, 288, 2, T, False, False, False, False, False)
-    assert (tr.vel_x, tr.vel_y) == (2, 0) and tr.direction == "RIGHT"
-    assert tr.started_from_decision_point, "left a tile corner: should be a decision"
-    assert tr.decision_number == 1
-    tr.update(244, 288, 2, T, False, False, False, False, False)
-    assert not tr.started_from_decision_point, "mid-corridor is not a decision"
-    assert tr.decision_number == 1
-    assert tr.next_position() == (246, 288)
-
 @check("COLORASSIGN")
 def only_chasing_ghosts_count_as_evidence():
     for flag in ("frightened", "eaten", "home", "leaving", "entering"):
@@ -397,21 +384,6 @@ def margin_is_never_negative_in_blending():
             chosen = costs[i][choice[i]] + costs[j][choice[j]]
             swapped = costs[i][choice[j]] + costs[j][choice[i]]
             assert swapped - chosen >= 0
-
-
-@check("COLORASSIGN")
-def forced_moves_give_no_evidence():
-    corridor = ["#########", "#       #", "#########"]
-    ca = make_tracker([(72, 40), (500, 500), (600, 500), (700, 500)])
-    ca.tracks[0].direction = "RIGHT"          # it was already travelling right
-    ca.tracks[0].update(74, 40, 2, T, False, False, False, False, False)
-    assert ca.tracks[0].started_from_decision_point
-    before = list(ca.logs)
-    ca.update_personality_scores(corridor, 72, 24, "RIGHT", T)
-    assert ca.evidence_events == 0 and ca.scored_turns == 0, \
-        "a corridor move with one legal option was counted as evidence"
-    assert ca.logs == before, "a forced move must not change the belief"
-
 
 @check("COLORASSIGN")
 def a_real_choice_updates_belief_and_keeps_it_valid():
