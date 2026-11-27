@@ -183,16 +183,6 @@ class Game:
         return [(ghost, tracks[index])
                 for ghost, index in zip(self.ghosts, best_order)]
 
-    def basic_test(self):
-        assert_equal()
-        pass
-
-    def intermediate_test(self):
-        pass
-
-    def advanced_test(self):
-        pass
-
     def draw_debug(self):
         ca = self.color_assign
         pairs = self._pair_ghosts_with_tracks()
