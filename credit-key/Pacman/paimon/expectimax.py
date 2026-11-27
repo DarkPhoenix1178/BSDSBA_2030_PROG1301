@@ -382,7 +382,7 @@ class Expectimax:
             if centre_cell >= 0 and mask & bit[centre_cell]:
                 mask ^= bit[centre_cell]
                 if power_mask & bit[centre_cell]:
-                    reward += 500
+                    reward += 50
                     power_frames = self._power_frames
                     ghost_tuples = [
                         (x, y, d, s, 1) for (x, y, d, s, f) in ghost_tuples
