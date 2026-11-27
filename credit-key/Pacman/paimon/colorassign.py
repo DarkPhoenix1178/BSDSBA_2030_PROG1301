@@ -88,7 +88,7 @@ class Track:
             self.direction = "UP"
 
         self.missed_frames = 0
-        self.started_from_decision_point = (self.vel_x != 0 or self.vel_y != 0) and ((self.prev_x % (TILE_SIZE) == 0) or (self.prev_y % (TILE_SIZE) == 0))
+        self.started_from_decision_point = (self.vel_x != 0 or self.vel_y != 0) and (self.prev_x % (TILE_SIZE) == 0) and (self.prev_y % (TILE_SIZE) == 0)
 
         if self.started_from_decision_point:
             self.decision_number += 1
@@ -436,6 +436,9 @@ class Colorassign:
             track.last_scored_decision = track.decision_number
 
             if not track.valid_personality_evidence:
+                continue
+            
+            if not track.plausible_movement:
                 continue
 
             legal = self.legal_moves(maze, track, size)
