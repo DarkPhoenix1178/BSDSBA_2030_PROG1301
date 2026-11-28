@@ -5,15 +5,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-def rot_y(theta):
-    c, s = np.cos(theta), np.sin(theta)
-    return np.array([[c, 0, -s], [0, 1, 0], [s, 0, c]])
-
-def rotation_x(theta):
+def rot_x(theta):
     c, s = np.cos(theta), np.sin(theta)
     return np.array([[1, 0, 0], [0, c, -s], [0, s, c]])
 
-def rotation_y(theta):
+def rot_y(theta):
     c, s = np.cos(theta), np.sin(theta)
     return np.array([[c, 0, s], [0, 1, 0], [-s, 0, c]])
 
@@ -28,6 +24,12 @@ for _ in range(80):
     positions.append(pos.copy())
 
 # TODO: Add Phase 2 & other maneuvers here
+
+#Phase 2: Half-Roll
+for _ in range(40):
+    R = R @ rot_x(np.pi / 40)
+    pos = pos + R[:, 0] * 2.0
+    positions.append(pos.copy())
 
 positions = np.array(positions)
 
